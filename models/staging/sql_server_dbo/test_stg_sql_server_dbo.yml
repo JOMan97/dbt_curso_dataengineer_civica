@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: stg_sql_server_dbo_events
+    columns:
+      - name: product_id
+        test:
+          - unique
+          - not_null
+          - relationships:
+              to: source('sql_server_dbo', 'products')
+              field: product_id
+          
+      - name: order_id
+        test:
+          - unique
+          - not_null
+          - relationships:
+              to: source('sql_server_dbo', 'orders')
+          
+  - name: stg_sql_server_dbo_event_type
+    columns:
+      - name: event_type_natural
+        tests:
+          - unique
+          - accepted_values:
+              values: ['add_to_cart', 'package_shipped', 'page_view', 'checkout']
+  
+  - name: stg_sql_server_dbo_orders
+    columns:
+      - name: shipping_service
+        tests:
+          - not_null
+      - name: promo_id
+        test:
+          - not_null
+      - name: tracking_id
+        test: 
+          - not_null
