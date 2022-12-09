@@ -18,6 +18,7 @@ renamed_casted AS (
          else  product_id
          end as product_id
         , page_url
+        , event_type
         ,case
          when order_id = '' then null
          else  order_id

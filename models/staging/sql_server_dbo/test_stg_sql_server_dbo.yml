@@ -26,14 +26,3 @@ models:
           - accepted_values:
               values: ['add_to_cart', 'package_shipped', 'page_view', 'checkout']
   
-  - name: stg_sql_server_dbo_orders
-    columns:
-      - name: shipping_service
-        tests:
-          - not_null
-      - name: promo_id
-        test:
-          - not_null
-      - name: tracking_id
-        test: 
-          - not_null
