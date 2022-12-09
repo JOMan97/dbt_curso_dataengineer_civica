@@ -8,9 +8,6 @@ renamed_casted AS (
         order_id
         , product_id
         , quantity
-        , created_at_utc
-        , updated_at_utc
-        , date_load
     FROM stg_sql_server_dbo_order_items
     )
 
