@@ -45,6 +45,7 @@ sources:
             description: >
                 Url de la página web.
           - name: order_id
+          - name: order_id
             description: >
                 Identificador del pedido.
           - name: session_id

@@ -25,4 +25,3 @@ models:
           - unique
           - accepted_values:
               values: ['add_to_cart', 'package_shipped', 'page_view', 'checkout']
-  

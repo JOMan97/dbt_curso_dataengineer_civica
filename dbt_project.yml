@@ -54,7 +54,7 @@ models:
         {%- if  target.name == 'user_dev' -%} dev_gold_db_alumno9
         {%- elif target.name == 'ci' -%} dev_gold_db_alumno9
         {%- elif target.name == 'pro'-%} pro_gold_db_alumno9 
-        {%- else -%} {{target.database}}_gold_db_alumno_24
+        {%- else -%} {{target.database}}_gold_db_alumno_9
         {%- endif -%}
       core:
         +schema: core
@@ -68,6 +68,6 @@ snapshots:
         {%- if  target.name == 'user_dev' -%} dev_silver_db_alumno9
         {%- elif target.name == 'ci' -%} dev_silver_db_alumno9
         {%- elif target.name == 'pro'-%} pro_silver_db_alumno9  
-        {%- else -%} {{target.database}}_silver_db_alumno_24
+        {%- else -%} {{target.database}}_silver_db_alumno_9
         {%- endif -%}
   +target_schema: snapshots
