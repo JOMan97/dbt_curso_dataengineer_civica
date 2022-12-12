@@ -21,20 +21,30 @@ sources:
       - name: addresses
         columns:
           - name: address_id
+            description: >
+                Identificador de la dirección.
             tests:
               - unique
               - not_null
           - name: country
+            description: >
+                País de la dirección.
             tests:
               - not_null
           - name: zipcode
+            description: >
+                Código postal.
             tests:
               - dbt_utils.expression_is_true:
                   expression: " > 0"
           - name: address
+            description: >
+                Dirección.
             tests:
               - not_null
           - name: state
+            description: >
+                Estado donde se encuentra la dirección.
             tests:
               - not_null
           - name: _fivetran_deleted
@@ -43,35 +53,56 @@ sources:
       - name: events
         columns:
           - name: event_id
+            description: >
+                Identificador del evento.
             tests:
               - unique
               - not_null
           - name: product_id
+            description: > 
+                Identificador del producto.
             test:
               - unique
               - relationships:
-                  to: source('sql_server_dbo', 'products')
+                  to: source('src_sql_server_dbo', 'products')
                   field: product_id
           - name: page_url
+            description: >
+                Url de la página web.
             tests: 
               - not_null
           - name: event_type
+            description: >
+                Descripción del evento.
             tests: 
               - accepted_values:
                     values: ['add_to_cart', 'package_shipped', 'page_view', 'checkout']
           - name: order_id
-
+            description: >
+                Identificador del pedido.
+            test:
+              - unique
+              - not_null
+              - relationships:
+                      to: ref(stg_sql_server_dbo_orders)
+                      field: order_id
           - name: session_id
+            description: >
+                Identificador de sesión donde se encuentra el usuario.
             tests:
               - not_null
           - name: created_at
+            description: >
+                Fecha de la creación de la evento.
             tests:
               - not_null
           - name: user_id
+            description: >
+                Identificador del usuario.
             tests:
               - not_null
               - relationships: 
-                  to: source('sql_server_dbo', 'users')
+                  to: source('src_sql_server_dbo', 'users')
                   field: user_id
           - name: _fivetran_deleted
           - name: _fivetran_synced
@@ -79,18 +110,24 @@ sources:
       - name: order_items
         columns:
           - name: order_id
+            description: >
+                Identificador del pedido
             tests:
               - not_null
               - relationships:
-                  to: source('sql_server_dbo', 'orders')
+                  to: source('src_sql_server_dbo', 'orders')
                   field: order_id
           - name: product_id
+            description: >
+                Identificador del producto
             tests: 
               - not_null
               - relationships:
-                  to: source('sql_server_dbo', 'products')
+                  to: source('src_sql_server_dbo', 'products')
                   field: product_id
           - name: quantity
+            description: >
+                Cantidad de productos.
             tests:
               - dbt_utils.expression_is_true:
                   expression: "> 0"
@@ -100,47 +137,70 @@ sources:
       - name: orders
         columns:
           - name: order_id
+            description: >
+                Identificador del pedido.
             tests: 
               - unique
               - not_null
           - name: estimated_delivery_at
-
+            description: >
+                Tiempo de entrega estimado.
           - name: promo_id
-
+            description: >
+                Identificador de la promoción.
           - name: user_id
+            description: >
+                Identificador del usuario.
             tests:
               - not_null
               - relationships:
-                  to: source('sql_server_dbo', 'users')
+                  to: source('src_sql_server_dbo', 'users')
                   field: user_id
           - name: shipping_service
+            description: >
+                Empresa de mensajería.
             tests:
               - not_null
           - name: shipping_cost
+            description: >
+                Coste del envío.
             tests: 
               - dbt_utils.expression_is_true:
                   expression: "> 0"
           - name: order_cost
+            description: >
+                Coste total del pedido.
             tests:
               - dbt_utils.expression_is_true:
                   expression: "> 0"
           - name: created_at
+            Description: >
+                Fecha de la creación del pedido.
             tests:
               - not_null
           - name: tracking_id
+            description: > 
+                Número de seguimiento del pedido.
           - name: delivered_at
-
+            description: >
+                Entrega del pedido.
           - name: address_id
+            description: >
+                Identificador de la dirección.
             tests:
               - not_null
               - relationships:
-                  to: source('sql_server_dbo', 'addresses')
+                  to: source('src_sql_server_dbo', 'addresses')
                   field: address_id
           - name: status
+            description: >
+                Estado del pedido
             tests:
               - accepted_values:
                     values: ['delivered', 'shipped', 'preparing']
           - name: order_total
+            description: >
+                Pedidos totales.
             tests: 
               - not_null
           - name: _fivetran_deleted
@@ -149,17 +209,25 @@ sources:
       - name: products
         columns: 
           - name: product_id
+            description: >
+                Identificador del producto.
             tests:
               - unique
               - not_null
           - name: price
+            description: >
+                Precio del producto.
             tests:
               - dbt_utils.expression_is_true:
                   expression: "> 0"
           - name: name
+            description: >
+                Nombre del producto.
             tests:
               - not_null
           - name: inventory
+            description: >
+                Inventario.
             tests:
               - dbt_utils.expression_is_true:
                   expression: "> 0"
@@ -169,14 +237,20 @@ sources:
       - name: promos
         columns:
           - name: promo_id
+            description: >
+                Identificador del producto.
             tests:
               - unique
               - not_null
           - name: status
+            description: >
+                Estado de la promoción.
             tests: 
               - accepted_values:
                     values: ['active', 'inactive']
           - name: discount
+            description: > 
+                Descuento.
             tests:
               - accepted_values:
                     values: ['20', '2', '10', '11', '17', '13']
@@ -186,30 +260,45 @@ sources:
       - name: users
         columns:
           - name: user_id
+            description: >
+                Identificador del usuario.
             tests:
               - unique
               - not_null
           - name: address_id
+            description: >
+                Identificador de la dirección.
             tests: 
               - not_null
               - relationships:
-                  to: source('sql_server_dbo', 'addresses')
+                  to: source('src_sql_server_dbo', 'addresses')
                   field: address_id
           - name: first_name
+            description: >
+                Nombre del usuario.
             tests: 
               - not_null
           - name: last_name
+            description: >
+                Apellidos del usuario.
             tests:
               - not_null
           - name: created_at
+            description: >
+                Fecha de creación del usuario.
             tests: 
               - not_null
           - name: phone_number
-
+            description: >
+                Número de teléfono.
           - name: email
+            description: >
+                Dirección de correo electrónico.
             tests:
               - not_null
           - name: updated_at
+            description: >
+                Actualización de la sesión.
             tests: 
               - not_null
           - name: _fivetran_deleted

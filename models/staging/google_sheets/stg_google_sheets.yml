@@ -1,25 +1,25 @@
 version: 2
 
 models:
-  - name: stg_budget
+  - name: stg_google_sheets_budget
     columns:
-      - name: _row
+      - name: id_budget
+        tests:
+          - not_null
+          - unique
+      - name: _row_natural
         tests:
           - not_null
           - unique
       - name: product_id         
         tests:
-          - not_null
           - relationships:
-                to: ref('stg_products')
+                to: ref('stg_sql_server_dbo_products')
                 field: product_id  
       - name: quantity
         tests:
-          - not_null
-          - positive_values    
+          - dbt_utils.expression_is_true:
+                expression: "> 0"  
       - name: month
-        tests:
-          - not_null
-      - name: date_load
         tests:
           - not_null

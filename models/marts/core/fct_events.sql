@@ -8,7 +8,6 @@ renamed_casted AS (
         event_id
         , event_type
         , product_id
-        , order_id
         , session_id
         , created_at
         , user_id
