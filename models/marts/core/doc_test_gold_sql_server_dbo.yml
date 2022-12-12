@@ -1,19 +1,8 @@
 version: 2
 
-sources:
+models:
 
-  - name: test_bronze_stg_sql_server_dbo # name of the source 
-    schema: sql_server_dbo # this is the schema our raw data lives in
-    database: dev_bronze_db_alumno9 # this is the name of our database
-
-    quoting:
-      database: false
-      schema: false
-      identifier: false
-
-    tables:
-
-      - name: addresses
+      - name: dim_addresses
         columns:
           - name: address_id
             description: >
@@ -33,7 +22,7 @@ sources:
           - name: _fivetran_deleted
           - name: _fivetran_synced
 
-      - name: events
+      - name: fct_events
         columns:
           - name: event_id
             description: >
@@ -44,9 +33,7 @@ sources:
           - name: page_url
             description: >
                 Url de la página web.
-          - name: event_type
-            description: >
-                Descripción del evento.
+          - name: order_id
           - name: order_id
             description: >
                 Identificador del pedido.
@@ -62,7 +49,7 @@ sources:
           - name: _fivetran_deleted
           - name: _fivetran_synced
 
-      - name: order_items
+      - name: dim_order_items
         columns:
           - name: order_id
             description: >
@@ -76,7 +63,7 @@ sources:
           - name: _fivetran_deleted
           - name: _fivetran_synced
           
-      - name: orders
+      - name: fct_orders
         columns:
           - name: order_id
             description: >
@@ -120,7 +107,7 @@ sources:
           - name: _fivetran_deleted
           - name: _fivetran_synced
 
-      - name: products
+      - name: dim_products
         columns: 
           - name: product_id
             description: >
@@ -137,7 +124,7 @@ sources:
           - name: _fivetran_deleted
           - name: _fivetran_synced
       
-      - name: promos
+      - name: dim_promos
         columns:
           - name: promo_id
             description: >
@@ -151,7 +138,7 @@ sources:
           - name: _fivetran_deleted
           - name: _fivetran_synced
   
-      - name: users
+      - name: dim_users
         columns:
           - name: user_id
             description: >
@@ -176,7 +163,114 @@ sources:
                 Dirección de correo electrónico.
           - name: updated_at
             description: >
-                Actualización de la sesión.
+                Actualización de de la sesión.
           - name: _fivetran_deleted
           - name: _fivetran_synced
         
+      - name: dim_event_type
+        columns:
+          - name: event_type
+            description: >
+                Tipo de evento.
+      
+      - name: dim_tiempo
+        columns:
+          - name: fecha_forecast
+            description: >
+                Fecha completa.
+          - name: id_date
+            description: >
+                Identificador de la fecha.
+          - name: anio
+            description: >
+                Año.
+          - name: mes
+            description: >
+                Mes.
+          - name: desc_mes
+            description: >
+                Descripción del mes.
+          - name: id_anio_mes
+            description: >
+                Identificador del mes y año.
+          - name: dia_previo
+            description: >
+                Día previo.
+          - name: anio_semana_dia
+            description: >
+                Identificador de año, semana y día.
+          - name: semana
+            description: >
+                Semana.
+      
+      - name: avg_gastos_usuarios
+        columns:
+          - name: user_id
+            description: >
+                Identificador de usuario.
+            tests:
+              - relationships:
+                  to: ref('dim_users')
+                  field: user_id
+          - name: first_name
+            description: >
+                Nombre.
+          - name: last_name
+            description: >
+                Apellido.
+          - name: media_total_gastado
+            description: >
+                Media total gastado por usuario.
+      
+      - name: descuento_total
+        columns:
+          - name: user_id
+            description: >
+                Identificador de usuario.
+            tests:
+              - relationships:
+                  to: ref('dim_users')
+                  field: user_id
+          - name: first_name
+            description: >
+                Nombre.
+          - name: last_name
+            description: >
+                Apellido.
+          - name: total_descuento
+            description: >
+                Descuento total por cada usuario.
+
+      - name: total_gastos_envio
+        columns:
+          - name: user_id
+            description: >
+                Identificador de usuario.
+            tests:
+              - relationships:
+                  to: ref('dim_users')
+                  field: user_id
+          - name: first_name
+            description: >
+                Nombre.
+          - name: last_name
+            description: >
+                Apellido.
+          - name: total_gasto_envio
+            description: >
+                Total gasto de envío.
+      
+      - name: total_gastos_usuarios
+        columns:
+          - name: user_id
+            description: >
+                Identificador de usuario.
+          - name: first_name
+            description: >
+                Nombre.
+          - name: last_name
+            description: >
+                Apellido.
+          - name: total_gastos_usuarios
+            description: >
+                Total de gastos por usuario.

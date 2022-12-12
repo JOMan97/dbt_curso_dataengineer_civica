@@ -11,6 +11,8 @@ renamed_casted AS (
         , email
         , phone_number
         , address_id
+        , created_at
+        , updated_at
     FROM stg_sql_server_dbo_users
     )
 
