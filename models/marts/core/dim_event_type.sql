@@ -5,7 +5,8 @@ WITH stg_sql_server_dbo_event_type AS (
 
 renamed_casted AS (
     SELECT
-        event_type_natural
+        event_type
+        , event_type_natural
     FROM stg_sql_server_dbo_event_type
     )
 

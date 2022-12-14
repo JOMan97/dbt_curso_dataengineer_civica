@@ -6,7 +6,9 @@ WITH stg_sql_server_dbo_order_items AS (
 renamed_casted AS (
     SELECT
         order_id
+        , order_id_natural
         , product_id
+        , product_id_natural
         , quantity
     FROM stg_sql_server_dbo_order_items
     )

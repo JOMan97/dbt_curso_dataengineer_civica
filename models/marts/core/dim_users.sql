@@ -6,6 +6,7 @@ WITH stg_sql_server_dbo_users AS (
 renamed_casted AS (
     SELECT
         user_id
+        , user_id_natural
         , first_name
         , last_name
         , email

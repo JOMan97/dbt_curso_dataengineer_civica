@@ -13,7 +13,7 @@ renamed_casted AS (
     SELECT
           md5(user_id) as user_id 
         , user_id as user_id_natural 
-        , address_id
+        , md5(address_id) as address_id
         , first_name
         , last_name
         , created_at

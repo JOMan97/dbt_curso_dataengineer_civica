@@ -19,7 +19,6 @@ renamed_casted AS (
           end as shipping_service
         , shipping_cost
         , md5(address_id) as address_id
-        , address_id as address_id_natural 
         , created_at
         , case
           when promo_id = '' then null
