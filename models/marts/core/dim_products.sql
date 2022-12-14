@@ -6,6 +6,7 @@ WITH stg_sql_server_dbo_products AS (
 renamed_casted AS (
     SELECT
         product_id
+        , product_id_natural
         , price
         , name
         , inventory

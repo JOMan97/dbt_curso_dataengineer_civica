@@ -6,6 +6,7 @@ WITH stg_sql_server_dbo_orders AS (
 renamed_casted AS (
     SELECT
         order_id
+        , order_id_natural
         , shipping_service
         , shipping_cost
         , address_id

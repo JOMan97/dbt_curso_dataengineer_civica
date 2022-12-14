@@ -15,13 +15,13 @@ renamed_casted AS (
         , event_id as event_id_natural 
         , case
          when product_id = '' then null
-         else  product_id
+         else  md5(product_id)
          end as product_id
         , page_url
-        , event_type
+        , md5(event_type) as event_type_natural
         ,case
          when order_id = '' then null
-         else  order_id
+         else  md5(order_id)
          end as order_id
         , session_id
         , created_at
